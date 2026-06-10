@@ -1,0 +1,33 @@
+pipeline{
+    agent any
+
+    stages {
+        stage('checkout') {
+            steps {
+               git 'https://github.com/harshsareen03/python_jen.git'
+            }
+        }
+        stage('install') {
+            steps {
+                
+                sh '''
+                python3 -m venv venv
+                . venv/bin/activate
+                pip install -r requirements.txt
+                '''
+            }
+        }
+        stage('test') {
+            steps {
+                
+                sh 'pytest'
+            }
+        }
+        stage('build') {
+            steps {
+                
+                echo "Build package"
+            }
+        }
+    }
+}
